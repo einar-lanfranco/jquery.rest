@@ -44,6 +44,7 @@ defaultOpts =
   stripTrailingSlash: false
   password: null
   username: null
+  apikey: null
   verbs:
     'create' : 'POST'
     'read'   : 'GET'
@@ -227,6 +228,10 @@ class Resource
     if @opts.username and @opts.password
       encoded = encode64 @opts.username + ":" + @opts.password
       headers.Authorization = "Basic #{encoded}"
+
+    if (this.opts.apikey) {
+      headers['apikey'] = this.opts.apikey;
+    }
 
     if data and @opts.stringifyData and method not in ['GET', 'HEAD']
       data = stringify data
